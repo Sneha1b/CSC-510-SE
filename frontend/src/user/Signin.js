@@ -1,7 +1,72 @@
-import React from "react"
+import React, {useState} from "react"
 import Base from "../core/Base"
+import {Link, Redirect} from "react-router-dom"
+import { signin, authenticate, isAuthenticated } from "../auth/helper";
 
 const Signin = () => {
+
+    const [values, setValues] = useState({
+        name: "",
+        password: "",
+        error: "",
+        loading: false,         // To show loading msg to user that somethings going on 
+        didRedirect: false     // Redirect user after he signs in
+    });
+
+    const {name, password, error, loading, didRedirect} = values;
+    const {user} = isAuthenticated();
+
+    const handleChange = name => event => {
+        setValues({...values, error: false, [name]: event.target.value})
+    }
+
+    const onSubmit = event => {
+        event.preventDefault();
+        setValues({...values, error: false, loading:true});
+        signin({email, password})
+        .then(data => {
+            if(data.error) {
+                setValues({...values, error: data.error, loading: false});
+            }else{
+                authenticate(data, () => {
+                    setValues({
+                        ...values,
+                        didRedirect: true
+                    });
+                });
+                
+            }
+        })
+        .catch(console.log("Signin request failed"));
+    }
+
+    const successMessage = () => {
+        return (
+            <div className="row">
+                <div className="col-md-6 offset-sm-3 text-left">
+                    <div className="alert alert-success"
+                        style={{display: success ? "" : "none"}}>
+                            New account was created successfully. Please {" "} 
+                        <Link to="/signin">Login Here</Link>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const errorMessage = () => {
+        return (
+            <div className="row">
+                <div className="col-md-6 offset-sm-3 text-left">
+                    <div className="alert alert-danger"
+                        style={{display: error ? "" : "none"}}>
+                        {error}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     const signInForm = () => {
         return (
             <div className="row">
@@ -9,15 +74,15 @@ const Signin = () => {
                     <form> 
                         <div className="form-group">
                             <label className="text-light">Email</label>
-                            <input className="form-control" type="email"/>
+                            <input onChange={handleChange("email")} className="form-control" type="email" value={email}/>
                         </div>
                         <div className="form-group">
                             <label className="text-light">Password</label>
-                            <input className="form-control" type="password"/>
+                            <input onChange={handleChange("password")} className="form-control" type="password" value={password}/>
                         </div>
                         <div className="form-group">
                             <label className="text-dark">submit</label>
-                            <button className="btn btn-success btn-block form-control">Submit</button>
+                            <button onClick={onSubmit} className="btn btn-success btn-block form-control">Submit</button>
                         </div>
                     </form>
                 </div>
