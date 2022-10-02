@@ -1,19 +1,19 @@
 import React, {useState} from "react"
 import Base from "../core/Base"
-import {Link, Redirect} from "react-router-dom"
+import {Link, Navigate} from "react-router-dom"
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
 
 const Signin = () => {
 
     const [values, setValues] = useState({
-        name: "",
+        email: "",
         password: "",
         error: "",
         loading: false,         // To show loading msg to user that somethings going on 
         didRedirect: false     // Redirect user after he signs in
     });
 
-    const {name, password, error, loading, didRedirect} = values;
+    const {email, password, error, loading, didRedirect} = values;
     const {user} = isAuthenticated();
 
     const handleChange = name => event => {
@@ -40,17 +40,27 @@ const Signin = () => {
         .catch(console.log("Signin request failed"));
     }
 
-    const successMessage = () => {
+    const performRedirect = () => {
+        if(didRedirect){
+            if(user && user.role === 1){
+                return <p>Redirect to admin</p>;
+            }else{
+                return <p>Redirect to user dashboard</p>;
+            }
+        }
+
+        if(isAuthenticated()){
+            return <Navigate to="/" />;
+        }
+    };
+
+    const loadingMessage = () => {
         return (
-            <div className="row">
-                <div className="col-md-6 offset-sm-3 text-left">
-                    <div className="alert alert-success"
-                        style={{display: success ? "" : "none"}}>
-                            New account was created successfully. Please {" "} 
-                        <Link to="/signin">Login Here</Link>
-                    </div>
+            loading && (
+                <div className="alert alert-info">
+                    <h2>Loading...</h2>
                 </div>
-            </div>
+            )
         );
     };
 
@@ -92,7 +102,11 @@ const Signin = () => {
 
     return (
         <Base title = "Sign In page" description="A page for user to sign in!">
+            {loadingMessage()}
+            {errorMessage()}
             {signInForm()}
+            {performRedirect()}
+            <p className="text-white text-center">{JSON.stringify(values)}</p>
         </Base>
     );  
 };
