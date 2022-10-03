@@ -1,5 +1,6 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, Navigate } from "react-router-dom";
+import { signout, isAuthenticated } from "../auth/helper";
 
 const currentTab = (location, path) => {
   if (location.pathname === path) {
@@ -66,15 +67,20 @@ const Menu = () => (
           Sign In
         </Link>
       </li>
-      <li className="nav-item">
-        <Link
-          style={currentTab(useLocation(), "/signout")}
-          className="nav-link"
-          to="/signout"
-        >
-          Signout
-        </Link>
-      </li>
+      {isAuthenticated() && (
+        <li className="nav-item">
+          <span
+            className="nav-link text-warning"
+            onClick={() => {
+              signout(() => {
+                return <Navigate to="/" />;
+              });
+            }}
+          >
+            Signout
+          </span>
+        </li>
+      )}
     </ul>
   </div>
 );
