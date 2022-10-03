@@ -1,8 +1,8 @@
-import { Schema, model } from "mongoose";
-import { createHmac } from "crypto";
-import { v4 as uuidv4 } from "uuid";
+var mongoose = require("mongoose");
+const crypto = require("crypto");
+const uuidv4 = require("uuid");
 
-var userSchema = new Schema(
+var userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -70,4 +70,4 @@ userSchema.methods = {
   },
 };
 
-export default model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
