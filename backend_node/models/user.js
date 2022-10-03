@@ -1,42 +1,73 @@
-import mongoose from "mongoose";
-const { Schema } = mongoose;
+import { Schema, model } from "mongoose";
+import { createHmac } from "crypto";
+import { v4 as uuidv4 } from "uuid";
 
-const userSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    maxlength: 32,
-    trim: true,
+var userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      maxlength: 32,
+      trim: true,
+    },
+    lastname: {
+      type: String,
+      maxlength: 32,
+      trim: true,
+    },
+    email: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
+    },
+    userinfo: {
+      type: String,
+      trim: true,
+    },
+    encry_password: {
+      type: String,
+      required: true,
+    },
+    salt: String,
+    role: {
+      type: Number,
+      default: 0,
+    },
+    purchases: {
+      type: Array,
+      default: [],
+    },
   },
-  lastName: {
-    type: String,
-    maxlength: 32,
-    trim: true,
-  },
-  email: {
-    type: String,
-    trim: true,
-    required: true,
-    unique: true,
-  },
-  userInfo: {
-    type: String,
-    trim: true,
-  },
-  //TODO: come back here
-  password: {
-    type: String,
-    trim: true,
-  },
-  salt: String,
-  role: {
-    type: Number,
-    default: 0,
-  },
-  purchases: {
-    type: Array,
-    default: [],
-  },
-});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("User", userSchema);
+userSchema
+  .virtual("password")
+  .set(function (password) {
+    this._password = password;
+    this.salt = uuidv4();
+    this.encry_password = this.securePassword(password);
+  })
+  .get(function () {
+    return this._password;
+  });
+
+userSchema.methods = {
+  autheticate: function (plainpassword) {
+    return this.securePassword(plainpassword) === this.encry_password;
+  },
+
+  securePassword: function (plainpassword) {
+    if (!plainpassword) return "";
+    try {
+      return createHmac("sha256", this.salt)
+        .update(plainpassword)
+        .digest("hex");
+    } catch (err) {
+      return "";
+    }
+  },
+};
+
+export default model("User", userSchema);
