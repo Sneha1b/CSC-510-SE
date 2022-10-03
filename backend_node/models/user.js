@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-const crypto = require("crypto");
+const { createHmac } = require("node:crypto");
 const uuidv4 = require("uuid");
 
 var userSchema = new mongoose.Schema(
