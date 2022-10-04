@@ -11,7 +11,7 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const categoryRoutes = require("./routes/category");
 const productRoutes = require("./routes/product");
-// const orderRoutes = require("./routes/order");
+const orderRoutes = require("./routes/order");
 // const paymentBRoutes = require("./routes/paymentBRoutes");
 
 //DB Connection
