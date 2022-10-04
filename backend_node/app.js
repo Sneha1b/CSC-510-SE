@@ -35,7 +35,7 @@ app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
-// app.use("/api", orderRoutes);
+app.use("/api", orderRoutes);
 // app.use("/api", paymentBRoutes);
 
 //PORT
