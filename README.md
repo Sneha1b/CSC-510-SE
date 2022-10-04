@@ -4,11 +4,12 @@
 [![Build Status](https://github.com/Sneha1b/CSC-510-SE/actions/workflows/maven.yml/badge.svg)](https://github.com/Sneha1b/CSC-510-SE/actions/workflows/maven.yml) 
 
 # Description
-The aim of this project is to build a well structured github repository with all necessary contents. 
+The project was taken up as a part of the course work for CSC 510 Software Engieneering during Masters. The project aims at creating a microservice, build it ground up and understand various aspects of softwware development in industry.
+
+We Design an e-commerce microservice that helps the customers host and sell customized tshirts. 
 
 # Group members
 * Chirrag Nangia
 * Saswat Priyadarshan
-* Dhanush Binoy
 * Sneha Madle
 * Yugalee Vijay Patil
