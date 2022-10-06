@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Base from "../core/Base";
-import { Navigate } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
 
 const Signin = () => {
@@ -41,14 +42,14 @@ const Signin = () => {
   const performRedirect = () => {
     if (didRedirect) {
       if (user && user.role === 1) {
-        return <Navigate to="/admin/dashboard" />
+        return <Redirect to="/admin/dashboard" />;
       } else {
-        return <Navigate to="/user/dashboard" />
+        return <Redirect to="/user/dashboard" />;
       }
     }
-
+    
     if (isAuthenticated()) {
-      return <Navigate to="/" />;
+      return <Redirect to="/" />;
     }
   };
 
@@ -100,15 +101,9 @@ const Signin = () => {
                 value={password}
               />
             </div>
-            <div className="form-group">
-              <label className="text-dark">submit</label>
-              <button
-                onClick={onSubmit}
-                className="btn btn-success btn-block form-control"
-              >
-                Submit
-              </button>
-            </div>
+            <button onClick={onSubmit} className="btn btn-success btn-block">
+              Submit
+            </button>
           </form>
         </div>
       </div>
@@ -121,6 +116,7 @@ const Signin = () => {
       {errorMessage()}
       {signInForm()}
       {performRedirect()}
+      <p className="text-white text-center">{JSON.stringify(values)}</p>
     </Base>
   );
 };

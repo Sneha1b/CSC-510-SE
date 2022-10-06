@@ -71,15 +71,9 @@ const Signup = () => {
                 value={password}
               />
             </div>
-            <div className="form-group">
-              <label className="text-dark">submit</label>
-              <button
-                onClick={onSubmit}
-                className="btn btn-success btn-block form-control"
-              >
-                Submit
-              </button>
-            </div>
+            <button onClick={onSubmit} className="btn btn-success btn-block">
+              Submit
+            </button>
           </form>
         </div>
       </div>
@@ -122,6 +116,7 @@ const Signup = () => {
       {successMessage()}
       {errorMessage()}
       {signUpForm()}
+      <p className="text-white text-center">{JSON.stringify(values)}</p>
     </Base>
   );
 };
