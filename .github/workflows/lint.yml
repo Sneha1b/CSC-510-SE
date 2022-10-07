@@ -6,5 +6,10 @@ jobs:
   eslint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: stefanoeb/eslint-action@1.0.2
+    - name: Run ESLint
+      run: |
+        ls
+        cd ./frontend
+        eslint . --ext .js,.jsx,.ts,.tsx
+        cd ../backend_node
+        eslint . --ext .js,.jsx,.ts,.tsx
