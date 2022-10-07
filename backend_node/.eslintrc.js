@@ -16,6 +16,7 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "no-unused-vars":"off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "require-jsdoc" : "off"
   },
 };
