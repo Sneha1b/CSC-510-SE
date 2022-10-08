@@ -9,6 +9,7 @@
 [![Github pull requests](https://img.shields.io/github/issues-pr/Sneha1b/CSC-510-SE)](https://github.com/Sneha1b/CSC-510-SE/pulls)
 [![Github closed pull requests](https://img.shields.io/github/issues-pr-closed/Sneha1b/CSC-510-SE)](https://github.com/Sneha1b/CSC-510-SE/pulls?q=is%3Apr+is%3Aclosed)
 [![Github Repo size in bytes](https://img.shields.io/github/languages/code-size/Sneha1b/CSC-510-SE)](https://github.com/Sneha1b/CSC-510-SE)
+[![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/yugaleep/8e264936b1eed4aa6bad8df68fca36d3/raw/Sneha1b/CSC-510-SE__heads_main.json)]
 
 # Description
 The project was taken up as a part of the course work for CSC 510 Software Engineering during Masters. The project aims at creating a microservice, build it ground up and understand various aspects of software development in the industry.
